@@ -1,9 +1,11 @@
+
 /*
  * authors: Guilherme Zarzicki & Vitoria Lik Santos 
  */
 
 #include <ArduinoQueue.h>
 #include <IRremote.h>  
+
 
 //define dos botoes com os respectivos pinos
 #define btn1 A0
@@ -29,7 +31,8 @@ int i;
 int modo;   //gravacao ou controle
 
 float valor[15];  //array de codigos ralativos aos botoes  
-  
+
+
 IRrecv irrecv(RECV_PIN);  
 IRsend irsend;
 
@@ -42,20 +45,21 @@ ArduinoQueue<unsigned long> intQueue(20);    //criacao da fila
 void setup(){ 
   
   //define os pinos dos botoes como entrada
-  pinMode(A0, INPUT);
-  pinMode(A1, INPUT);
-  pinMode(A2, INPUT);
-  pinMode(A3, INPUT);
-  pinMode(A4, INPUT);
-  pinMode(A5, INPUT);
-  pinMode(3, INPUT);
-  pinMode(4, INPUT);
-  pinMode(5, INPUT);
-  pinMode(6, INPUT);
-  pinMode(7, INPUT);
-  pinMode(8, INPUT);
-  pinMode(9, INPUT);
-  pinMode(10, INPUT);
+  pinMode(A0, INPUT_PULLUP);
+  pinMode(A1, INPUT_PULLUP);
+  pinMode(A2, INPUT_PULLUP);
+  pinMode(A3, INPUT_PULLUP);
+  pinMode(A4, INPUT_PULLUP);
+  pinMode(A5, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(4, INPUT_PULLUP);
+  pinMode(5, INPUT_PULLUP);
+  pinMode(6, INPUT_PULLUP);
+  pinMode(7, INPUT_PULLUP);
+  pinMode(8, INPUT_PULLUP);
+  pinMode(9, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP);
 
   
   pinMode(11, INPUT);    //receptor como entrada
@@ -69,7 +73,7 @@ void setup(){
 void loop(){
 
   //caso entre no modo de gravacao
-  if(digitalRead(btn1 && btn15)==1){
+  if(digitalRead(btn1 && btn15) == LOW){
     modo = 1;
   }
   else{
@@ -77,64 +81,86 @@ void loop(){
   }
 
   //caso botao simples seja pressionado
-  if(digitalRead(btn1)==1){
+  if(digitalRead(btn1)== LOW){
     intQueue.enqueue(valor[1]);
+//    Serial.print("teste1\n");
   }
   
-  if(digitalRead(btn2)==1){
+  if(digitalRead(btn2) == LOW){
     intQueue.enqueue(valor[2]);
+//    Serial.print("teste2\n"); 
   }
   
-  if(digitalRead(btn3)==1){
+  if(digitalRead(btn3)== LOW){
     intQueue.enqueue(valor[3]);
+//    Serial.print("teste3\n"); 
   }
   
-  if(digitalRead(btn4)==1){
+  if(digitalRead(btn4)== LOW){
     intQueue.enqueue(valor[4]);
+//    Serial.print("teste4\n");
   }
   
-  if(digitalRead(btn5)==1){
+  if(digitalRead(btn5)== LOW){
     intQueue.enqueue(valor[5]);
+//    Serial.print("teste5\n");
   }
   
-  if(digitalRead(btn6)==1){
+  if(digitalRead(btn6)== LOW){
     intQueue.enqueue(valor[6]);
+//    Serial.print("teste6\n"); 
   }
   
-  if(digitalRead(btn7)==1){
+  if(digitalRead(btn7)== LOW){
     intQueue.enqueue(valor[7]);
+//    Serial.print("teste7\n");
   }
   
-  if(digitalRead(btn8)==1){
+  if(digitalRead(btn8)== LOW){
     intQueue.enqueue(valor[8]);
+//    Serial.print("teste8\n");
+    
   }
   
-  if(digitalRead(btn9)==1){
+  if(digitalRead(btn9)== LOW){
     intQueue.enqueue(valor[9]);
+//    Serial.print("teste9\n");
   }
   
-  if(digitalRead(btn10)==1){
+  if(digitalRead(btn10)== LOW){
     intQueue.enqueue(valor[10]);
+//    Serial.print("teste10\n");
+     
   }
   
-  if(digitalRead(btn11)==1){
+  if(digitalRead(btn11)== LOW){
     intQueue.enqueue(valor[11]);
+//    Serial.print("teste11\n");
+     
   }
   
-  if(digitalRead(btn12)==1){
+  if(digitalRead(btn12)== LOW){
     intQueue.enqueue(valor[12]);
+//    Serial.print("teste12\n");
+    
   }
   
-  if(digitalRead(btn13)==1){
+  if(digitalRead(btn13)== LOW){
     intQueue.enqueue(valor[13]);
+//    Serial.print("teste13\n");
+   
   }
   
-  if(digitalRead(btn14)==1){
+  if(digitalRead(btn14)== LOW){
     intQueue.enqueue(valor[14]);
+//    Serial.print("teste14\n");
+    
   }
   
-  if(digitalRead(btn15)==1){
+  if(digitalRead(btn15)== LOW){
     intQueue.enqueue(valor[15]);
+//    Serial.print("teste15\n");
+    
   }
 
   while(intQueue.itemCount()>0){    //se a fila nao estiver vazia envia os itens nela contidos
@@ -144,8 +170,8 @@ void loop(){
   }
     
 
-  if(modo==1){ //caso modo 1, grava novos codigos no controle
-    i=0;
+  if(modo == 1){ //caso modo 1, grava novos codigos no controle
+    i = 0;
     if(irrecv.decode(&results)){ 
       while(i<16){ 
         Serial.print("Valor lido : ");  
@@ -157,5 +183,5 @@ void loop(){
         i++;
       }
     } 
-  }  
+  } 
 }
